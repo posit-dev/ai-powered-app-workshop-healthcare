@@ -15,7 +15,7 @@ georgia_cases <- readRDS("georgia_cases.RDS")
 source("helpers.R")
 
 # Setup querychat
-qc <- QueryChat$new(georgia_cases, greeting = "Hi! How can I help you explore cancer incidence rates in Georgia?")
+qc <- querychat(georgia_cases, greeting = "Hi! How can I help you explore cancer incidence rates in Georgia?")
 
 ui <- page_sidebar(
   title = "2025 Cancer Incidence Rates in Georgia",
