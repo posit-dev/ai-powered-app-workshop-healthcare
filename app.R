@@ -1,4 +1,4 @@
-# app-template.R
+# app.R
 # An empty Shiny app. This is a template you can use to build most Shiny apps.
 
 library(shiny)
