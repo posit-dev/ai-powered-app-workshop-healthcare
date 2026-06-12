@@ -36,7 +36,7 @@ ui <- page_sidebar(
       card(
         card_header("Data"),
         full_screen = TRUE,
-        DTOutput("data_table")
+        DTOutput("table")
       )
     )
   )
@@ -47,20 +47,20 @@ server <- function(input, output, session) {
   # Add querychat server-side elements
   qc_vals <- qc$server()
 
-  filtered_data <- reactive({
+  filtered <- reactive({
     qc_vals$df()
   })
 
   output$map <- renderLeaflet({
-    create_incidence_map(filtered_data(), rate = TRUE)
+    create_incidence_map(filtered(), rate = TRUE)
   })
 
   output$plot <- renderPlot({
-    plot_incidence_by_demographic(filtered_data(), RE)
+    plot_incidence_by_demographic(filtered(), RE)
   })
 
-  output$data_table <- DT::renderDT({
-    datatable(filtered_data(), options = list(pageLength = 10, bPaginate = TRUE, dom = 'ltipr'))
+  output$table <- DT::renderDT({
+    datatable(filtered(), options = list(pageLength = 10, bPaginate = TRUE, dom = 'ltipr'))
   })
 }
 

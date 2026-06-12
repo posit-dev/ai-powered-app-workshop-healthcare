@@ -41,7 +41,7 @@ ui <- page_sidebar(
       card(
         card_header("Data"),
         full_screen = TRUE,
-        DTOutput("data_table")
+        DTOutput("table")
       )
     )
   )
@@ -49,22 +49,22 @@ ui <- page_sidebar(
 
 server <- function(input, output, session) {
 
-  filtered_data <- reactive({
+  filtered <- reactive({
     req(input$site)
     georgia_cases |>
       filter(Site %in% input$site)
   })
 
   output$map <- renderLeaflet({
-    create_incidence_map(filtered_data(), rate = TRUE)
+    create_incidence_map(filtered(), rate = TRUE)
   })
 
   output$plot <- renderPlot({
-    plot_incidence_by_demographic(filtered_data(), RE)
+    plot_incidence_by_demographic(filtered(), RE)
   })
 
-  output$data_table <- renderDT({
-    datatable(filtered_data(), options = list(pageLength = 10, bPaginate = TRUE, dom = 'ltipr'))
+  output$table <- renderDT({
+    datatable(filtered(), options = list(pageLength = 10, bPaginate = TRUE, dom = 'ltipr'))
   })
 }
 
